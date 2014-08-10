@@ -1,78 +1,80 @@
 /** @jsx React.DOM */
 
-var CommentBox = React.createClass({
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
+function appearances_of_item_in_array(myitem, myarray) {
+  console.log('appearances_of_item_in_array for:');
+  console.log(myitem);
+  console.log(myarray);
+  var i;
+  var count = 0;
+  for (i = 0; i < myarray.length; ++i) {
+    if (myitem == myarray[i]) {
+      ++count;
+    }
+  } 
+  console.log(count);
+  return count;
+}
+
+var FeedbackMatrix = React.createClass({
   render: function() {
+
+    // Generate matrix_data to output the feedback matrix
+    var i, j;
+    var members = this.props.data.members;
+    var feedback = this.props.data.feedback;
+    var matrix_data = {};
+
+    for (i = 0; i < members.length; ++i) {
+      matrix_data[members[i]] = [];
+
+      for (j = 0; j < feedback.length; ++j) {
+        if (feedback[j][0] == members[i]) {
+          matrix_data[members[i]].push(feedback[j][1]);
+        }
+        if (feedback[j][1] == members[i]) {
+          matrix_data[members[i]].push(feedback[j][0]);
+        }
+      }
+    }
+
+    console.log(matrix_data);
+
+    // create table data
+    var table_data = new Array(members.length + 1);
+
+    for (i = 0; i < members.length; ++i) {
+      table_data[i] = new Array(members.length + 1);
+      table_data[i][0] = members[i];
+
+      for (j = 1; j < members.length; ++j) { 
+        table_data[i][j] = appearances_of_item_in_array(members[j], matrix_data[members[i]]);
+      }
+    }
+
+    console.log(table_data);
+
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList data={this.state.data} />
-        <CommentForm />
-      </div>
+      <div>cool...</div>
+      // <table><tbody>
+      //   {matrix_data.map(function(row) {
+      //     return (
+      //       <tr>
+      //         {row.map(function(cell) {
+      //           return <td>{cell}</td>;
+      //         })}
+      //       </tr>);
+      //   })}
+      // </tbody></table>
     );
   }
 });
 
-var CommentList = React.createClass({
-  render: function() {
-    var commentNodes = this.props.data.map(function (comment) {
-      return (
-        <Comment author={comment.author}>
-          {comment.text}
-        </Comment>
-      );
-    });
-    return (
-      <div className="commentList">
-        {commentNodes}
-      </div>
-    );
-  }
+
+$.getJSON('./data.json', function(data) {
+
+  React.renderComponent(
+    <FeedbackMatrix data={data} />,
+    document.getElementById('feedbackmatrix')
+  );
+
 });
-
-var converter = new Showdown.converter();
-var Comment = React.createClass({
-  render: function() {
-    var rawMarkup = converter.makeHtml(this.props.children.toString());
-    return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-        <span dangerouslySetInnerHTML={{__html: rawMarkup}} />
-      </div>
-    );
-  }
-});
-
-var CommentForm = React.createClass({
-  render: function() {
-    return (
-      <div className="commentForm">
-        Hello, world! I am a CommentForm.
-      </div>
-    );
-  }
-});
-
-React.renderComponent(
-  <CommentBox url="comments.json" />,
-  document.getElementById('content')
-);
-
-
-
