@@ -1,9 +1,6 @@
 /** @jsx React.DOM */
 
 function appearances_of_item_in_array(myitem, myarray) {
-  console.log('appearances_of_item_in_array for:');
-  console.log(myitem);
-  console.log(myarray);
   var i;
   var count = 0;
   for (i = 0; i < myarray.length; ++i) {
@@ -11,7 +8,6 @@ function appearances_of_item_in_array(myitem, myarray) {
       ++count;
     }
   } 
-  console.log(count);
   return count;
 }
 
@@ -37,8 +33,6 @@ var FeedbackMatrix = React.createClass({
       }
     }
 
-    console.log(matrix_data);
-
     // create table data
     var table_data = new Array(members.length + 1);
 
@@ -46,25 +40,32 @@ var FeedbackMatrix = React.createClass({
       table_data[i] = new Array(members.length + 1);
       table_data[i][0] = members[i];
 
-      for (j = 1; j < members.length; ++j) { 
-        table_data[i][j] = appearances_of_item_in_array(members[j], matrix_data[members[i]]);
+      for (j = 0; j < members.length; ++j) { 
+        table_data[i][j+1] = appearances_of_item_in_array(members[j], matrix_data[members[i]]);
       }
     }
 
-    console.log(table_data);
-
     return (
-      <div>cool...</div>
-      // <table><tbody>
-      //   {matrix_data.map(function(row) {
-      //     return (
-      //       <tr>
-      //         {row.map(function(cell) {
-      //           return <td>{cell}</td>;
-      //         })}
-      //       </tr>);
-      //   })}
-      // </tbody></table>
+      <table>
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            {members.map(function(cell) {
+              return <td>{cell}</td>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {table_data.map(function(row) {
+            return (
+              <tr>
+                {row.map(function(cell) {
+                  return <td>{cell}</td>;
+                })}
+              </tr>);
+          })}
+        </tbody>
+      </table>
     );
   }
 });
