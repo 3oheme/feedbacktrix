@@ -1,0 +1,63 @@
+#feedbackmatrix table {
+	table-layout: fixed;
+	font-size: 14px;
+}
+
+#feedbackmatrix thead {
+	font-weight: 400;
+	background: #ebebeb;
+	border-bottom: 1px solid #CCC;
+}
+
+#feedbackmatrix th,
+#feedbackmatrix td {
+	font-weight: 400;
+	text-align: center;
+	padding: 10px 0;
+}
+
+
+#feedbackmatrix tbody td:first-child {
+	background: #ebebeb;
+	padding
+}
+
+.feedbackmatrix-n0 { }
+.feedbackmatrix-n1 { color: #FFF; font-weight: 900; background: rgb(17, 170, 88); }
+.feedbackmatrix-n2 { color: #FFF; font-weight: 900; background: rgb(26, 115, 86); }
+.feedbackmatrix-n3 { color: #FFF; font-weight: 900; background: rgb(177, 28, 84); }
+
+
+
+#leaderboard .item {
+	clear: both;
+	margin-bottom: 25px;
+	overflow: hidden;
+}
+
+#leaderboard .name {
+	float: left;
+	width: 200px;
+	height: 57px;
+	line-height: 60px;
+	background: #ebebeb;
+}
+
+#leaderboard .rightboard {
+	float: left;
+	margin-left: 20px;
+	width: calc(100% - 220px);
+}
+
+#leaderboard .points {
+	text-align: left;
+	float: left;
+}
+
+#leaderboard .bar {
+	display: block;
+	border-radius: 2px;
+	background: rgb(28, 201, 210);
+	min-width: 10px;
+	clear: left;
+}
