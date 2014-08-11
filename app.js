@@ -73,7 +73,7 @@ var FeedbackMatrix = React.createClass({
 
 function boardcalculate_points(member, members, feedback) {
   var i, j, points;
-  points = 0
+  points = 0;
   for (i = 0; i < feedback.length; ++i) {
     if (feedback[i][0] == member || feedback[i][1] == member) {
       ++points;
@@ -84,9 +84,10 @@ function boardcalculate_points(member, members, feedback) {
 
 function sort_the_leader(board) {
   board = board.sort(function(a, b) {
-    return parseInt(a[1]) < parseInt(b[1]);
+    return parseInt(a[1]) >= parseInt(b[1]);
   });
-  return board;
+
+  return board.reverse();
 }
 
 function add_percentage(board) {
