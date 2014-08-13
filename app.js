@@ -83,39 +83,27 @@ function boardcalculate_points(member, members, feedback) {
 }
 
 function sort_the_leader(board) {
-  board = board.sort(function(a, b) {
+  var myboard = board.sort(function(a, b) {
     return parseInt(a[1]) >= parseInt(b[1]);
   });
 
-  return board.reverse();
+  return myboard;
 }
 
 function add_percentage(board) {
   var i;
   var max = board[0][1];
-  for (i = 0; i < board.length; ++i) {
-    board[i].push(((board[i][1]*100)/max));
+  var newboard = board;
+  for (i = 0; i < newboard.length; ++i) {
+    newboard[i].push(((newboard[i][1]*100)/max));
   }
-  return board;
+  return newboard;
 }
 
 var LeaderBoard = React.createClass({
   render: function() {
 
-    var members = this.props.data.members.sort();
-    var feedback = this.props.data.feedback;
-
-    var board = new Array(members.length);
-
-    var i, j;
-    for (i = 0; i < members.length; ++i) {
-      board[i] = new Array(2);
-      board[i][0] = members[i];
-      board[i][1] = boardcalculate_points(members[i], members, feedback);
-    }
-
-    board = sort_the_leader(board);
-    board = add_percentage(board);
+    var board = this.props.data;
 
     return (
       <div>
@@ -142,8 +130,23 @@ $.getJSON('./data.json', function(data) {
     document.getElementById('feedbackmatrix')
   );
 
+  var members = data.members.sort();
+  var feedback = data.feedback;
+
+  var board = new Array(members.length);
+
+  var i, j;
+  for (i = 0; i < members.length; ++i) {
+    board[i] = new Array(2);
+    board[i][0] = members[i];
+    board[i][1] = boardcalculate_points(members[i], members, feedback);
+  }
+
+  board = sort_the_leader(board);
+  board = add_percentage(board);
+
   React.renderComponent(
-    <LeaderBoard data={data} />,
+    <LeaderBoard data={board} />,
     document.getElementById('leaderboard')
   );
 
