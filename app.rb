@@ -19,4 +19,4 @@ html_content = template.result(binding)
 File.open(output_file, "w") do |file|
   file.puts html_content
 end
-puts output_file + ' rendered successfully'
+puts ' --- ' + output_file + ' rendered successfully'
