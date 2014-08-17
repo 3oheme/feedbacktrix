@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 
+require 'csv'
+
 def raw_data_members
-	return [
+	raw_array_data_members = [
 		"Ignacio",
 		"Alina",
 		"Taheerah",
@@ -15,36 +17,18 @@ def raw_data_members
 		"Pablo",
 		"Dan"
 	]
+	return raw_array_data_members.dup
 end
 
 def raw_data_feedback
-	return [
-		["Mircea","Alina"],
-		["Matt","Laura"],
-		["Ignacio","Mike"],
-		["Ignacio","Alina"],
-		["Ignacio","Maryam"],
-		["Ignacio","Mircea"],
-		["Ignacio","Taheerah"],
-		["Ignacio","Mike"],
-		["Alina","Laura"],
-		["Alina","Richard"],
-		["Alina","Matt"],
-		["Alina","Mike"],
-		["Taheerah","Richard"],
-		["Taheerah","Matt"],
-		["Taheerah","Laura"],
-		["Taheerah","Maryam"],
-		["Taheerah","Mike"],
-		["Alina","Arvind"],
-		["Mircea","Laura"],
-		["Mircea","Maryam"],
-		["Matt","Richard"],
-		["Matt","Mike"],
-		["Matt","Maryam"],
-		["Matt","Mircea"],
-		["Laura","Mike"],
-		["Laura","Richard"],
-		["Laura","Maryam"],
-	]
+
+	csv = CSV.read('feedback.csv')
+	csv.delete_at(0)
+	csv.map { |row| row.delete_at(0) }
+	csv.each do |row|
+		row[0].strip!
+		row[1].strip!
+	end
+
+	return csv.dup
 end
