@@ -61,3 +61,11 @@
 	min-width: 10px;
 	clear: left;
 }
+
+.badge {
+	border-radius: 2px;
+	background: rgb(255, 244, 80);
+	font-size: 12px;
+	padding: 3px 6px;
+	margin-left: 10px;
+}

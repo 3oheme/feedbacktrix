@@ -49,13 +49,18 @@ def print_leaderboard_section(person_list)
 	sorted_list_of_names.each do |member|
 		name = person_list.persons[member[0]].name
 		points = person_list.persons[member[0]].points.to_s
+
+		badge_string = ''
+		person_list.persons[member[0]].badges.each do |badge|
+			badge_string += '<span class="badge badge-' + badge + '">'+ badge +'</span>'
+		end
 		percentage = ((person_list.persons[member[0]].points * 100) / max_points).to_s
 		output += '
 			<div>
 				<div class="item">
             		<div class="name">' + name +'</div>
             		<div class="rightboard">
-              		<span class="points" >' + points +' points</span>
+              		<span class="points" >' + points +' points '+ badge_string +'</span>
               		<span class="bar" style="width:' + percentage +'%">&nbsp;</span>
 	            </div>
    		    </div>'

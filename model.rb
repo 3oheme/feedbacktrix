@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
 
 class Person
-	attr_accessor :name, :points, :has_give_feedback_to
+	attr_accessor :name, :points, :has_give_feedback_to, :badges
 	def initialize(name, raw_data_feedback)
 		@name = name
 		@points = 0
+		@badges = []
 		@has_give_feedback_to = Hash.new
 		raw_data_members.each do |member|
 			@has_give_feedback_to[member] = 0
@@ -43,11 +44,28 @@ class Person_list_with_points
 
 	private
 	
+	def calculate_max_points
+		max_points = 0
+		@persons.each do |person|
+			if person[1].points > max_points
+				max_points = person[1].points
+			end
+		end
+		return max_points
+	end
+
 	def calculate_points
+		# first calculate points
 		@persons.each do |person|
 			person_info = person[1]
 			give_1_point_for_each_feedback(person_info)
 			give_10_points_if_giving_feedback_to_everyone(person_info)
+		end
+
+		# later give badges			
+		@persons.each do |person|
+			person_info = person[1]	
+			give_mayor_badge_to_the_leader(person_info)
 		end
 	end
 
@@ -69,6 +87,13 @@ class Person_list_with_points
 		end
 		if list_of_all_users.length == 0
 			@persons[person.name].points += 10
+		end
+	end
+
+	def give_mayor_badge_to_the_leader(person)
+		top = calculate_max_points
+		if person.points == top
+			@persons[person.name].badges.push('mayor')
 		end
 	end
 
