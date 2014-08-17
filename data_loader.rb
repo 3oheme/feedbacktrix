@@ -45,6 +45,6 @@ def raw_data_feedback
 		["Matt","Mircea"],
 		["Laura","Mike"],
 		["Laura","Richard"],
-		["Laura","Maryam"]
+		["Laura","Maryam"],
 	]
 end

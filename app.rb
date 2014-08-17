@@ -4,8 +4,8 @@ require 'pp'
 require 'erb'
 
 require_relative 'data_loader'
-require_relative 'view.rb'
-require_relative 'model.rb'
+require_relative 'view'
+require_relative 'model'
 
 person_list = Person_list_with_points.new(raw_data_members, raw_data_feedback)
 

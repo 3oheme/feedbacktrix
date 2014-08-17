@@ -47,7 +47,6 @@ def print_leaderboard_section(person_list)
 	max_points = sorted_list_of_names[0][1]
 
 	sorted_list_of_names.each do |member|
-
 		name = person_list.persons[member[0]].name
 		points = person_list.persons[member[0]].points.to_s
 		percentage = ((person_list.persons[member[0]].points * 100) / max_points).to_s
