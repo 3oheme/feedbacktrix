@@ -15,7 +15,10 @@ def raw_data_members
 		"Richard",
 		"Arvind",
 		"Pablo",
-		"Dan"
+		"Dan",
+    "Darren",
+    "Julie",
+    "Andy"
 	]
 	return raw_array_data_members.dup
 end
